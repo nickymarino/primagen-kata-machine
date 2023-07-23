@@ -1,3 +1,43 @@
+
+function qs(arr: number[], low: number, high: number): void {
+    if (low >= high) {
+        return;
+    }
+
+    const pivotIdx = partition(arr, low, high);
+
+    qs(arr, low, pivotIdx - 1);
+    qs(arr, pivotIdx + 1, high);
+}
+
+function partition(arr: number[], low: number, high: number): number { 
+    // The pivot selction doesn't need to be fancy; just use the last item
+    const pivot = arr[high];
+
+    let idx = low - 1;
+
+    // Weak sort
+    for (let i = low; i < high; i++) {
+        if (arr[i] <= pivot) {
+            idx++;
+            const tmp = arr[i];
+            arr[i] = arr[idx];
+            arr[idx] = tmp;
+        }
+    }
+
+    // Move the pivot to the right place in the sorted list
+    idx++;
+    arr[high] = arr[idx];
+    arr[idx] = pivot;
+
+    return idx;
+}
+
+
 export default function quick_sort(arr: number[]): void {
+    // low and high are inclusive in quicksort, unlike most other algos
+    qs(arr, 0, arr.length - 1);
+
 
 }
